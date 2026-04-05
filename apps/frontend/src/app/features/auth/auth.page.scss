@@ -1,0 +1,83 @@
+.auth-shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: min(460px, 100%);
+  border: 1px solid #000000;
+  background: #ffffff;
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+p {
+  margin: 6px 0 0;
+  color: #4a4a4a;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  button {
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .active {
+    background: #000000;
+    color: #ffffff;
+  }
+}
+
+form {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+span {
+  font-size: 0.85rem;
+}
+
+input {
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+  padding: 10px 12px;
+  outline: none;
+}
+
+input:focus {
+  box-shadow: 0 0 0 2px #d9d9d9;
+}
+
+.submit {
+  margin-top: 6px;
+  border: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.submit:hover {
+  transform: translateY(-1px);
+}

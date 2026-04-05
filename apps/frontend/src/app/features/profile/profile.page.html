@@ -1,0 +1,25 @@
+<section class="profile-shell" appMotionEnter>
+  <header>
+    <h1>Profile</h1>
+    <a routerLink="/chat">Back to chat</a>
+  </header>
+
+  @if (loading()) {
+    <p>Loading profile...</p>
+  } @else if (data(); as profile) {
+    <article class="card">
+      <h2>Account</h2>
+      <p><strong>Username:</strong> {{ profile.user.username }}</p>
+      <p><strong>Email:</strong> {{ profile.user.email }}</p>
+      <p><strong>Joined:</strong> {{ profile.user.createdAt | date: "mediumDate" }}</p>
+    </article>
+
+    <article class="card">
+      <h2>Chat Stats</h2>
+      <p><strong>Total chats:</strong> {{ profile.stats.totalChats }}</p>
+      <p><strong>Total messages:</strong> {{ profile.stats.totalMessages }}</p>
+    </article>
+  }
+
+  <button type="button" (click)="logout()">Logout</button>
+</section>

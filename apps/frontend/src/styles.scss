@@ -1,0 +1,30 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #000000;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  color: #000000;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

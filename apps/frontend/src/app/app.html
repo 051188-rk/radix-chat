@@ -1,0 +1,9 @@
+<main class="app-shell">
+  @if (errorState.error()) {
+    <section class="error-banner">
+      <p>{{ errorState.error() }}</p>
+      <button type="button" (click)="dismissError()">Dismiss</button>
+    </section>
+  }
+  <router-outlet />
+</main>

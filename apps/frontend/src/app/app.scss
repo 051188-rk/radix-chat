@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.app-shell {
+  min-height: 100dvh;
+}
+
+.error-banner {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  max-width: 420px;
+  border: 1px solid #000000;
+  background: #ffffff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  button {
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+}

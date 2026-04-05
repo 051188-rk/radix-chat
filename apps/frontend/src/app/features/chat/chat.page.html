@@ -1,0 +1,122 @@
+<section class="layout">
+  <aside #sidebar class="sidebar" [class.collapsed]="sidebarCollapsed()">
+    <div class="sidebar-top">
+      <button class="icon-btn" type="button" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+      <button class="primary" type="button" (click)="createChat()">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" /></svg>
+        @if (!sidebarCollapsed()) {
+          <span>New chat</span>
+        }
+      </button>
+    </div>
+
+    <section class="model-picker">
+      @if (!sidebarCollapsed()) {
+        <label for="model">Model</label>
+      }
+      <select id="model" [ngModel]="selectedModel()" (ngModelChange)="selectedModel.set($event)">
+        @for (model of models; track model) {
+          <option [ngValue]="model">{{ model.toUpperCase() }}</option>
+        }
+      </select>
+    </section>
+
+    <section class="history">
+      @if (!sidebarCollapsed()) {
+        <h3>History</h3>
+      }
+      @if (loadingChats()) {
+        <p class="muted">Loading chats...</p>
+      } @else {
+        @for (group of groupedHistory(); track group.label) {
+          @if (!sidebarCollapsed()) {
+            <h4>{{ group.label }}</h4>
+          }
+          @for (chat of group.chats; track chat._id) {
+            <article
+              class="chat-row"
+              tabindex="0"
+              [class.active]="chat._id === chatService.selectedChatId()"
+              (click)="selectChat(chat._id)"
+              (keydown.enter)="selectChat(chat._id)"
+            >
+              <span class="title">{{ sidebarCollapsed() ? "..." : chat.title }}</span>
+              @if (!sidebarCollapsed()) {
+                <button class="icon-btn ghost" type="button" (click)="removeChat(chat._id, $event)" aria-label="Delete chat">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7v12m6-12v12M10 4h4" /></svg>
+                </button>
+              }
+            </article>
+          }
+        }
+      }
+    </section>
+
+    <footer class="sidebar-bottom">
+      <a routerLink="/profile" class="profile-link">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 0114 0" /></svg>
+        @if (!sidebarCollapsed()) {
+          <span>Profile</span>
+        }
+      </a>
+      <button type="button" class="icon-btn ghost" (click)="logout()">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M10 17l-5-5m0 0l5-5m-5 5h14m0-7v14" /></svg>
+      </button>
+    </footer>
+  </aside>
+
+  <main class="chat-main">
+    <section class="messages">
+      @if (!chatService.currentChat()) {
+        <div class="empty" appMotionEnter>
+          <h2>Start a new conversation</h2>
+          <p>Select a model, then send your first prompt.</p>
+        </div>
+      } @else {
+        @for (message of currentMessages(); track $index) {
+          <article class="message" appMotionEnter [class.user]="message.role === 'user'" [class.assistant]="message.role === 'assistant'">
+            <header>
+              <span>{{ message.role === "user" ? "You" : "AI" }}</span>
+              <small>{{ message.model.toUpperCase() }}</small>
+            </header>
+
+            @if (message.role === "assistant") {
+              <div class="markdown" [innerHTML]="message.content | markdown"></div>
+              <div class="message-actions">
+                <button type="button" (click)="copy(message.content)">Copy</button>
+                <button type="button" (click)="regenerate()">Regenerate</button>
+              </div>
+            } @else {
+              <p>{{ message.content }}</p>
+            }
+          </article>
+        }
+
+        @if (typing()) {
+          <div class="typing">
+            <span></span><span></span><span></span>
+          </div>
+        }
+      }
+    </section>
+
+    <section class="composer-wrap">
+      <div class="composer">
+        <textarea
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          (input)="onComposerInput($event)"
+          (keydown)="onComposerKeydown($event)"
+          rows="1"
+          placeholder="Send a message..."
+        ></textarea>
+        <button type="button" class="send-btn" (click)="send()" [disabled]="chatService.isStreaming()">Send</button>
+        @if (chatService.isStreaming()) {
+          <button type="button" class="send-btn ghost" (click)="cancel()">Cancel</button>
+        }
+      </div>
+    </section>
+  </main>
+</section>

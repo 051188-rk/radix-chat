@@ -1,0 +1,30 @@
+{
+  "name": "fs-ang",
+  "version": "1.0.0",
+  "description": "Full-stack multi-model AI chat monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix apps/backend run dev\" \"npm --prefix apps/frontend run start\"",
+    "dev:backend": "npm --prefix apps/backend run dev",
+    "dev:frontend": "npm --prefix apps/frontend run start",
+    "build": "npm --prefix apps/backend run build && npm --prefix apps/frontend run build",
+    "build:backend": "npm --prefix apps/backend run build",
+    "build:frontend": "npm --prefix apps/frontend run build"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "keywords": [
+    "angular",
+    "express",
+    "mongodb",
+    "chat",
+    "ai"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
