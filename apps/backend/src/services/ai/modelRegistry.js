@@ -1,8 +1,10 @@
+const { GroqService } = require("./providers/groqService");
 const { GrokService } = require("./providers/grokService");
 const { GeminiService } = require("./providers/geminiService");
 const { NimService } = require("./providers/nimService");
 
 const providers = {
+  groq: new GroqService(),
   grok: new GrokService(),
   gemini: new GeminiService(),
   nim: new NimService()
@@ -27,12 +29,25 @@ async function generateWithModel({ model, messages, signal }) {
 }
 
 async function *streamWithModel({ model, messages, signal }) {
-  const normalized = await generateWithModel({ model, messages, signal });
-  for (const token of splitIntoChunks(normalized.content)) {
-    if (signal?.aborted) {
-      break;
+  const provider = providers[model] ?? providers.gemini;
+  
+  // Check if provider has streaming capability
+  if (typeof provider.streamGenerate === 'function') {
+    for await (const token of provider.streamGenerate({ messages, signal })) {
+      if (signal?.aborted) {
+        break;
+      }
+      yield token;
     }
-    yield token;
+  } else {
+    // Fallback to non-streaming
+    const normalized = await generateWithModel({ model, messages, signal });
+    for (const token of splitIntoChunks(normalized.content)) {
+      if (signal?.aborted) {
+        break;
+      }
+      yield token;
+    }
   }
 }
 
