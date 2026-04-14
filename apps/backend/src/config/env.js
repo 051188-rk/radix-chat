@@ -21,12 +21,14 @@ module.exports = {
     grokApiKey: ensureEnv("GROK_API_KEY"),
     geminiApiKey: ensureEnv("GEMINI_API_KEY"),
     nimApiKey: ensureEnv("NVIDIA_NIM_API_KEY"),
+    minimaxApiKey: ensureEnv("MINIMAX_API_KEY"),
     grokApiUrl: ensureEnv("GROK_API_URL", "https://api.x.ai/v1/chat/completions"),
     geminiApiUrl: ensureEnv(
       "GEMINI_API_URL",
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent"
     ),
-    nimApiUrl: ensureEnv("NVIDIA_NIM_API_URL", "https://integrate.api.nvidia.com/v1/chat/completions")
+    nimApiUrl: ensureEnv("NVIDIA_NIM_API_URL", "https://integrate.api.nvidia.com/v1/chat/completions"),
+    minimaxApiUrl: ensureEnv("MINIMAX_API_URL", "https://api.minimax.chat/v1/text/chatcompletion_pro")
   },
   validateEnv
 };

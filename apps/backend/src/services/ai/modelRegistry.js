@@ -2,12 +2,14 @@ const { GroqService } = require("./providers/groqService");
 const { GrokService } = require("./providers/grokService");
 const { GeminiService } = require("./providers/geminiService");
 const { NimService } = require("./providers/nimService");
+const { MinimaxService } = require("./providers/minimaxService");
 
 const providers = {
   groq: new GroqService(),
   grok: new GrokService(),
   gemini: new GeminiService(),
-  nim: new NimService()
+  nim: new NimService(),
+  minimax: new MinimaxService()
 };
 
 function splitIntoChunks(text) {
