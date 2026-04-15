@@ -22,13 +22,15 @@ module.exports = {
     geminiApiKey: ensureEnv("GEMINI_API_KEY"),
     nimApiKey: ensureEnv("NVIDIA_NIM_API_KEY"),
     minimaxApiKey: ensureEnv("MINIMAX_API_KEY"),
+    mistralApiKey: ensureEnv("MISTRAL_API_KEY"),
     grokApiUrl: ensureEnv("GROK_API_URL", "https://api.x.ai/v1/chat/completions"),
     geminiApiUrl: ensureEnv(
       "GEMINI_API_URL",
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent"
     ),
     nimApiUrl: ensureEnv("NVIDIA_NIM_API_URL", "https://integrate.api.nvidia.com/v1/chat/completions"),
-    minimaxApiUrl: ensureEnv("MINIMAX_API_URL", "https://api.minimax.chat/v1/text/chatcompletion_pro")
+    minimaxApiUrl: ensureEnv("MINIMAX_API_URL", "https://api.minimax.chat/v1/text/chatcompletion_pro"),
+    mistralApiUrl: ensureEnv("MISTRAL_API_URL", "https://api.mistral.ai/v1/chat/completions")
   },
   validateEnv
 };
